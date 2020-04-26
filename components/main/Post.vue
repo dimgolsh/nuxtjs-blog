@@ -13,9 +13,9 @@
       </small>
     </header>
     <div class="post-body">
-      <img
-        src="https://cdn.tripzaza.com/ru/destinations/files/2017/09/Berlin-e1505798693967.jpg"
-        alt="post image"
+      <img 
+        src="https://cdn.tripzaza.com/ru/destinations/files/2017/09/Berlin-e1505798693967.jpg" 
+        alt="post image" 
         class="post-img"
       >
     </div>
@@ -35,8 +35,7 @@
 export default {
   methods: {
     openPost() {
-      console.log('Open post')
-      const id = 1;
+      const id = 'test-id'
       this.$router.push(`/post/${id}`)
     }
   }
@@ -66,4 +65,5 @@ export default {
     padding: 1rem;
   }
 </style>
+
 
