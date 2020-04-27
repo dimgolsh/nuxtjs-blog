@@ -18,17 +18,28 @@
         </small>
       </div>
       <div class="post-image">
-        <img :src="post.imageUrl" alt="post image" />
+        <img
+          :src="post.imageUrl"
+          alt="post image"
+        >
       </div>
     </header>
     <main class="post-content">
       <vue-markdown>{{post.text}}</vue-markdown>
     </main>
     <footer>
-      <app-comment-form v-if="canAddComment" @created="createCommentHandler" />
+      <app-comment-form
+        v-if="canAddComment"
+        @created="createCommentHandler"
+        :postId="post._id"
+      />
 
       <div class="comments" v-if="post.comments.length">
-        <app-comment v-for="comment in post.comments" :key="comment" :comment="comment" />
+        <app-comment
+          v-for="comment in post.comments"
+          :key="comment._id"
+          :comment="comment"
+        />
       </div>
       <div class="text-center" v-else>Комментариев нет</div>
     </footer>
@@ -36,72 +47,66 @@
 </template>
 
 <script>
-import AppComment from "@/components/main/Comment";
-import AppCommentForm from "@/components/main/CommentForm";
+import AppComment from '@/components/main/Comment'
+import AppCommentForm from '@/components/main/CommentForm'
 
 export default {
-  validate({ params }) {
-    return Boolean(params.id);
+  validate({params}) {
+    return Boolean(params.id)
   },
-  async asyncData({ store, params }) {
-    console.log(params);
-    try {
-      const post = await store.dispatch("post/fetchById", params.id);
-      console.log(post);
-      await store.dispatch("post/addView", post);
-    } catch (error) {
-      console.error(error)
-    }
-
+  async asyncData({store, params}) {
+    const post = await store.dispatch('post/fetchById', params.id)
+    await store.dispatch('post/addView', post)
     return {
-      post: { ...post, views: ++post.views }
-    };
+      post: {...post, views: ++post.views}
+    }
   },
   data() {
     return {
       canAddComment: true
-    };
-  },
-  methods: {
-    createCommentHandler() {
-      this.canAddComment = false;
     }
   },
-  components: { AppComment, AppCommentForm }
-};
+  methods: {
+    createCommentHandler(comment) {
+      this.post.comments.unshift(comment)
+      this.canAddComment = false
+    }
+  },
+  components: {AppComment, AppCommentForm}
+}
 </script>
 
 <style lang="scss" scoped>
-.post {
-  max-width: 600px;
-  margin: 0 auto;
-}
+  .post {
+    max-width: 600px;
+    margin: 0 auto;
+  }
 
-.post-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
+  .post-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
 
-.post-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
+  .post-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+  }
 
-.post-image img {
-  width: 100%;
-  height: auto;
-}
+  .post-image img {
+    width: 100%;
+    height: auto;
+  }
 
-.post-header {
-  margin-bottom: 1.5rem;
-}
+  .post-header {
+    margin-bottom: 1.5rem;
+  }
 
-.post-content {
-  margin-bottom: 2rem;
-}
+  .post-content {
+    margin-bottom: 2rem;
+  }
 </style>
 
