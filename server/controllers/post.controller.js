@@ -26,10 +26,9 @@ module.exports.getAll = async (req, res) => {
 
 module.exports.getById = async (req, res) => {
   try {
-   const post =  await Post.findById(req.params.id).populate('comments').exec((error, post) => {
+    await Post.findById(req.params.id).populate('comments').exec((error, post) => {
       res.json(post)
     })
-    res.json(post)
   } catch (e) {
     res.status(500).json(e)
   }
