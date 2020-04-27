@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const {Schema, model} = require('mongoose')
 
 const postSchema = new Schema({
   title: {
@@ -21,8 +21,9 @@ const postSchema = new Schema({
   comments: [
     {
       type: Schema.Types.ObjectId,
-      ref: "comments"
+      ref: 'comments'
     }
   ]
-});
-module.exports = model("posts", postSchema);
+})
+
+module.exports = model('posts', postSchema)
