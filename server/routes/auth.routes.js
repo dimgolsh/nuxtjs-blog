@@ -3,7 +3,6 @@ const { login, createUser } = require('../controllers/auth.controller')
 const router = Router()
 
 // /api/auth/admin/login
-console.log('dddddddddddddddddddddd',login);
 router.post('/admin/login', login)
 
 // /api/auth/admin/create
