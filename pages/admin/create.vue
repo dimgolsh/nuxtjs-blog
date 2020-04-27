@@ -10,7 +10,7 @@
 
     <el-form-item label="Введите название поста" prop="title">
       <el-input
-        v-model.trim="controls.title"
+        v-model="controls.title"
       />
     </el-form-item>
 
@@ -63,6 +63,9 @@
 export default {
   layout: 'admin',
   middleware: ['admin-auth'],
+  head: {
+    title: `Новый пост | ${process.env.appName}`
+  },
   data() {
     return {
       image: null,
